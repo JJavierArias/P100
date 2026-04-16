@@ -1,16 +1,16 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
-var nFiles=1, nColumnes=1;
+var nFiles=2, nColumnes=2;
 
 var jocCartes = [
-    'carta14', 
+    'carta14', 'carta14', 'carta2', 'carta2'
 ];
 
 
 $(function(){
     var f, c, carta;
-    f=1;
-    c=1;
+    f=2;
+    c=2;
 
  
 
@@ -18,8 +18,8 @@ $(function(){
     alcadaCarta=$(".carta").height();
     // mida del tauler
     $("#tauler").css({
-        "width" : "120px",
-        "height": "160px"
+        "width" : "120px*"+c+"+"+separacioH*(c+1)+"px",
+        "height": "160px*"+f+"+"+separacioV*(f+1)+"px"
     });
 
     carta=$("#f"+f+"c"+c);
