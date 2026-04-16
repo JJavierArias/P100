@@ -9,17 +9,25 @@ var jocCartes = [
 
 $(function(){
     var f, c, carta;
-    f=2;
-    c=2;
+    f=1;
+    c=1;
 
  
-
+while(jocCartes.length>0){
+    f++;
+    if(f>nFiles){
+        f=1;
+        c++;
+    }
+    if(c>nColumnes){
+        break;
+    }
     ampladaCarta=$(".carta").width(); 
     alcadaCarta=$(".carta").height();
     // mida del tauler
     $("#tauler").css({
-        "width" : "120px*"+c+"+"+separacioH*(c+1)+"px",
-        "height": "160px*"+f+"+"+separacioV*(f+1)+"px"
+        "width" : "120"*f + separacioH*(f+1) + "px",
+        "height": "160"*c + separacioV*(c+1) + "px"
     });
 
     carta=$("#f"+f+"c"+c);
@@ -33,4 +41,6 @@ $(function(){
         $(this).toggleClass("carta-girada");
     });
 
-});
+}
+}
+);
