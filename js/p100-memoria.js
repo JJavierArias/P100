@@ -3,14 +3,17 @@ var separacioH=20, separacioV=20;
 var nFiles=1, nColumnes=1;
 
 var jocCartes = [
-    'carta14', 
+    'carta14',
+    'carta14',
+    'carta15',
+    'carta15',
 ];
 
 
 $(function(){
     var f, c, carta;
-    f=1;
-    c=1;
+    f=2;
+    c=2;
 
  
 
@@ -24,8 +27,8 @@ $(function(){
 
     carta=$("#f"+f+"c"+c);
     carta.css({
-        "left" :  ((c-1)*(ampladaCarta+separacioH)+separacioH)+"px",
-        "top"  :  ((f-1)*(alcadaCarta+separacioV) +separacioV)+"px"
+        "left" :  ((c-1)*(ampladaCarta+separacioH)+separacioH*(c+1))+"px",
+        "top"  :  ((f-1)*(alcadaCarta+separacioV) +separacioV*(f+1))+"px"
     });
     carta.find(".davant").addClass(jocCartes.pop());
    
