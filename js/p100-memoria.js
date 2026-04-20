@@ -1,6 +1,6 @@
 var ampladaCarta=80, alcadaCarta=120;
 var separacioH=20, separacioV=20;
-var nFiles=4, nColumnes=4;
+var nFiles=2, nColumnes=2;
 
 var jocCartes = [
     'carta14', 'carta14', 'carta2', 'carta2'
