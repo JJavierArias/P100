@@ -35,7 +35,7 @@ var comparaCartas = [];
 // contador de parejas, cuando se llegue al numero, muestra mensaje 
 // parejas = (nfiles* ncolumnes)/2
 
-// TASCA 7 X
+// TASCA 7 
 // el usuario pierde la partida si su numero de clicks es 3 veces el numero de cartas
 // hay que mostrar un mensaje de "you lose" y empezar nueva partida
 
@@ -53,6 +53,22 @@ function barajar(array)
         array[j] = aux;
     }
 }
+
+
+//tasca7
+
+function comprovarDerrota()
+{
+    if (numClicks >= maxClicks)
+        {
+            alert("Has perdut! Has fet " + numClicks + " clics.");
+            location.reload();
+        }
+}
+
+// Y en el evento click simplemente llamas a la función:
+numClicks++;
+comprovarDerrota();
 
 $(function() 
 {
@@ -110,19 +126,24 @@ $(function()
         $(this).toggleClass("carta-girada");
         
         //aqui hay que añadir las cartas que giren al array compara cartas 
-        $(this).
+        //$(this).
         // si comparaCartas.length es mayor que 2, comparamos una carta con otra 
         // si son iguales, hidden las cartas
         // si son diferentes le vuelven a ocultar (girar las cartas)
         numClicks++;
-        
+        comprovarDerrota();
     });
 });
 
 
 //22/04/2026
 //apuntes profe: 
+
+// primera observacion:
+
 // meter en funciones el codigo
+
+// segunda observacion,:
 
 // al hacer el primer click , guardar la carta
 // y al segundo click , guardar la carta
