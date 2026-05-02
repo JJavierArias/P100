@@ -35,6 +35,8 @@ var comparaCartas = [];
 // contador de parejas, cuando se llegue al numero, muestra mensaje 
 // parejas = (nfiles* ncolumnes)/2
 
+var parejasEncontradas = 0;
+
 // TASCA 7 
 // el usuario pierde la partida si su numero de clicks es 3 veces el numero de cartas
 // hay que mostrar un mensaje de "you lose" y empezar nueva partida
@@ -55,13 +57,36 @@ function barajar(array)
 }
 
 
+
+//tasca 6
+function comprovarVictoria() 
+{
+    // calculamos cuantas parejas hay en total según las filas y columnas 
+    var totalParejas = (nFiles * nColumnes) / 2;
+
+    // comparamos si las que hemos encontrado son iguales al total
+    if (parejasEncontradas === totalParejas) 
+        {
+        
+        
+        setTimeout(function() 
+        {
+            alert("¡ENHORABUENA! Has completado el juego en " + numClicks + " clics");
+            
+            //Reiniciamos la partida 
+            location.reload();
+        }, 500); 
+    }
+}
+
+
 //tasca7
 
 function comprovarDerrota()
 {
     if (numClicks >= maxClicks)
         {
-            alert("Has perdut! Has fet " + numClicks + " clics.");
+            alert("Has perdut! Has fet " + numClicks + " clics");
             location.reload();
         }
 }
@@ -122,17 +147,85 @@ $(function()
     }
 
     // Delegación de eventos para las cartas creadas dinámicamente
-    $("#tauler").on("click", ".carta", function() {
-        $(this).toggleClass("carta-girada");
+  
+    $("#tauler").on("click", ".carta", function() 
+    {
+    
+        // guardamos la carta que acabamos de clicar en una variable 
+        var $cartaActual = $(this);
+
         
-        //aqui hay que añadir las cartas que giren al array compara cartas 
-        //$(this).
-        // si comparaCartas.length es mayor que 2, comparamos una carta con otra 
-        // si son iguales, hidden las cartas
-        // si son diferentes le vuelven a ocultar (girar las cartas)
-        numClicks++;
-        comprovarDerrota();
-    });
+        // Si la carta ya está girada (clase 'carta-girada') 
+        // o si ya hay 2 cartas en proceso de comparación, no hacemos nada.
+        if ($cartaActual.hasClass("carta-girada") || comparaCartas.length >= 2)
+            {
+                return;
+            }
+           
+
+    //giramos la carta 
+    $cartaActual.addClass("carta-girada");
+
+    // Guardamos esta carta en nuestro array 'comparaCartas' para recordarla
+    comparaCartas.push($cartaActual);
+    
+    // TASCA 7: Sumamos un clic al contador y comprobamos si el usuario ha perdido
+    numClicks++;
+    comprovarDerrota();
+
+    //compruebo si hay dos cartas giradas
+    if (comparaCartas.length === 2) 
+    {
+
+            // Buscamos el div interno '.davant' y leemos TODAS sus clases de CSS.
+            // Esto nos devolverá algo como "cara davant carta14"
+            var carta1 = comparaCartas[0].find(".davant").attr("class");
+            var carta2 = comparaCartas[1].find(".davant").attr("class");
+
+            // comparamos la clase de ambas cartas
+            if (carta1 === carta2) 
+            {
+            
+            // si son iguales
+            // Esperamos 600ms para que termine la animación de giro antes de borrarlas 
+            setTimeout(function() 
+            {
+                // lo sacamos del tablero las q son pareja
+                comparaCartas[0].remove();
+                comparaCartas[1].remove();
+
+
+                // si coincide, pareja encontrada
+                parejasEncontradas++;
+        
+                // funcion que comprueba si se hallaron todas las parejas y si es asi, salta un alert de victoria sino sigue el juego
+                comprovarVictoria();
+                
+                // Vaciamos el array para poder elegir la siguiente pareja
+                comparaCartas = [];
+
+                
+            }, 1000);
+
+        } 
+        else 
+        {
+            
+            // NO son iguales 
+            // Esperamos 1 segundo para que al jugador le de tiempo a ver el error
+            setTimeout(function() 
+            {
+                // Les quitamos la clase para que vuelvan a quedar boca abajo
+                comparaCartas[0].removeClass("carta-girada");
+                comparaCartas[1].removeClass("carta-girada");
+                
+                // Vaciamos el array para seguir intentándolo
+                comparaCartas = [];
+            }, 1000);
+        }
+    }
+
+});
 });
 
 
