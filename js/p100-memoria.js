@@ -91,9 +91,18 @@ function comprovarDerrota()
         }
 }
 
-// Y en el evento click simplemente llamas a la función:
-numClicks++;
-comprovarDerrota();
+function actualitzarMarcador() {
+        // Calculem els clics que li queden al jugador
+    var clicsRestants = maxClicks - numClicks;
+    
+      // Si els clics restants baixen de 0, evitem que surtin números negatius
+    if (clicsRestants < 0) clicsRestants = 0;
+
+    // Actualitzem els spans de l'HTML amb els valors de les variables
+    $("#marcador-parelles").text(parejasEncontradas);
+    $("#marcador-clics").text(numClicks);
+    $("#marcador-restants").text(clicsRestants);
+}
 
 $(function() 
 {
@@ -107,6 +116,7 @@ $(function()
     });
 
     barajar(jocCartes);
+    actualitzarMarcador();
 
     // TASCA 3 & 4, crear dinamicamente los divs en el taule
     while (jocCartes.length > 0) 
@@ -171,6 +181,7 @@ $(function()
     
     // TASCA 7: Sumamos un clic al contador y comprobamos si el usuario ha perdido
     numClicks++;
+    actualitzarMarcador();
     comprovarDerrota();
 
     //compruebo si hay dos cartas giradas
@@ -197,6 +208,7 @@ $(function()
 
                 // si coincide, pareja encontrada
                 parejasEncontradas++;
+                actualitzarMarcador();
         
                 // funcion que comprueba si se hallaron todas las parejas y si es asi, salta un alert de victoria sino sigue el juego
                 comprovarVictoria();
